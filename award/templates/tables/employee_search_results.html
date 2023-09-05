@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f69a73;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .home-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .home-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .home-button button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center;">
+    <h2>Результаты поиска</h2>
+    {% if employees %}
+        <ul>
+            {% for employee in employees %}
+                <li>
+                    <strong>Имя:</strong> {{ employee.name }}<br>
+                    <strong>Пост:</strong> {{ employee.fk_post }}<br>
+                    <strong>Награда:</strong> {{ employee.fk_awards }}<br>
+                    <strong>Общий стаж:</strong> {{ employee.experience }}<br>
+                    <strong>Стаж в КГТУ:</strong> {{ employee.kgtu_experience }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Сотрудники не найдены.</p>
+    {% endif %}
+</div>
+
+<div class="home-button">
+    <button onclick="location.href='/home'">Домой</button>
+</div>
+
+</body>
+</html>

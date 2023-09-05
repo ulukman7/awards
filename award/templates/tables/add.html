@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f69a73;
+            font-family: Arial, sans-serif;
+        }
+
+        .decor {
+            position: relative;
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .form-left-decoration,
+        .form-right-decoration {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            background: #f69a73;
+            border-radius: 20px;
+        }
+
+        .form-left-decoration {
+            bottom: 60px;
+            left: -30px;
+        }
+
+        .form-right-decoration {
+            top: 60px;
+            right: -30px;
+        }
+
+        .form-left-decoration:before,
+        .form-left-decoration:after,
+        .form-right-decoration:before,
+        .form-right-decoration:after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            border-radius: 30px;
+            background: white;
+        }
+
+        .form-left-decoration:before {
+            top: -20px;
+        }
+
+        .form-left-decoration:after {
+            top: 20px;
+            left: 10px;
+        }
+
+        .form-right-decoration:before {
+            top: -20px;
+            right: 0;
+        }
+
+        .form-right-decoration:after {
+            top: 20px;
+            right: 10px;
+        }
+
+        .circle {
+            position: absolute;
+            bottom: 80px;
+            left: -55px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .form-inner {
+            padding: 50px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        button[type="submit"] {
+            background: #f69a73;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background: #d87d56;
+        }
+    </style>
+</head>
+<body>
+<div class="decor">
+    <div class="form-left-decoration"></div>
+    <div class="form-right-decoration"></div>
+    <div class="circle"></div>
+    <div class="form-inner">
+        <h2>Добавление сотрудника</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="name"></label>
+            <input type="text" id="name" name="name" placeholder="Имя">
+
+           <label for="{{ form.fk_post.id_for_label }}">Должность:</label>
+<select id="fk_post" name="fk_post">
+    <option value="" {% if not form.fk_post.value %}selected{% endif %}>-- Выберите должность --</option>
+    {% for value, label in form.fk_post.field.choices %}
+        <option value="{{ value }}" {% if form.fk_post.value == value %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+</select>
+<br>
+<label for="{{ form.fk_awards.id_for_label }}">Награда:</label>
+<select id="fk_awards" name="fk_awards">
+    <option value="" {% if not form.fk_awards.value %}selected{% endif %}>-- Выберите награду --</option>
+    {% for value, label in form.fk_awards.field.choices %}
+        <option value="{{ value }}" {% if form.fk_awards.value == value %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+</select>
+
+
+            <label for="hire"></label>
+            <input type="text" id="hire" name="hire" placeholder="Дата приема на работу">
+
+            <label for="kgtu_hire"></label>
+            <input type="text" id="kgtu_hire" name="kgtu_hire" placeholder="Дата приема на работу в КГТУ">
+
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

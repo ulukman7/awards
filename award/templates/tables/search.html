@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск сотрудников</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f69a73;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+
+        }
+
+        .form-left-decoration,
+        .form-right-decoration {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #f69a73;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .form-left-decoration {
+            bottom: -25px;
+            left: -25px;
+        }
+
+        .form-right-decoration {
+            top: -25px;
+            right: -25px;
+        }
+
+        .form-left-decoration:before,
+        .form-left-decoration:after,
+        .form-right-decoration:before,
+        .form-right-decoration:after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-left-decoration:before {
+            top: -10px;
+            left: -20px;
+        }
+
+        .form-left-decoration:after {
+            bottom: -10px;
+            left: -20px;
+        }
+
+        .form-right-decoration:before {
+            top: -10px;
+            right: -20px;
+        }
+
+        .form-right-decoration:after {
+            bottom: -10px;
+            right: -20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"],
+        select {
+            width: 80%;
+            padding: 3px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+        }
+
+        /* Изменение размера поля имени */
+        #name {
+            height: 30px;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 20px;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23333' d='M7.478 11.017l3.76-5.448a.5.5 0 0 1 .835-.014l.737 1.043c.134.19.048.452-.176.576L7.93 10.98a.5.5 0 0 1-.452 0L3.37 7.754c-.224-.124-.31-.386-.176-.576l.737-1.043a.5.5 0 0 1 .835.015l3.76 5.448a.5.5 0 0 0 .396.205h.004a.5.5 0 0 0 .4-.201z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 12px 12px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+          .button-container {
+            margin-top: 20px; /* Отступ сверху для кнопки */
+            text-align: center; /* Выравнивание кнопки по центру */
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <h2>Поиск сотрудников</h2>
+    <form method="post" action="{% url 'search' %}">
+        {% csrf_token %}
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <label for="name">Имя сотрудника:</label>
+        <input type="text" id="name" name="name">
+        <br>
+        <label for="post">Должность:</label>
+        <select id="post" name="post">
+            <option value="">-- Выберите должность --</option>
+            {% for post in posts %}
+            <option value="{{ post.post_id }}">{{ post.post_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="award">Награда:</label>
+        <select id="award" name="award">
+            <option value="">-- Выберите награду --</option>
+            {% for award in awards %}
+            <option value="{{ award.awards_id }}">{{ award.awards_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Найти</button>
+    </form>
+</body>
+</html>
